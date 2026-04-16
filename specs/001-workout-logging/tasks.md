@@ -17,9 +17,9 @@
 
 **Purpose**: Project initialization and Expo scaffolding
 
-- [ ] T001 Initialize Expo project with TypeScript template, install expo-sqlite and expo-router dependencies
-- [ ] T002 [P] Configure ESLint and Prettier for TypeScript/React Native in project root
-- [ ] T003 [P] Configure Jest and React Native Testing Library in jest.config.ts
+- [x] T001 Initialize Expo project with TypeScript template, install expo-sqlite and expo-router dependencies
+- [x] T002 [P] Configure ESLint and Prettier for TypeScript/React Native in project root
+- [x] T003 [P] Configure Jest and React Native Testing Library in jest.config.ts
 
 ---
 
@@ -29,12 +29,12 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 [P] Define TypeScript types for Exercise, Session, Set, SessionDetail in src/models/exercise.ts, src/models/session.ts, src/models/set.ts (per contracts/data-service.md types)
-- [ ] T005 [P] Define muscle group enum and validation constants in src/models/exercise.ts
-- [ ] T006 Create SQLite database initialization with migration runner in src/db/database.ts
-- [ ] T007 Create initial schema migration (exercises, sessions, sets tables with indexes) in src/db/migrations/001-initial.ts
-- [ ] T008 Create built-in exercise seed data (20-30 exercises across all muscle groups) in src/db/seed.ts
-- [ ] T009 Create Expo Router root layout with tab navigation in src/app/_layout.tsx
+- [x] T004 [P] Define TypeScript types for Exercise, Session, Set, SessionDetail in src/models/exercise.ts, src/models/session.ts, src/models/set.ts (per contracts/data-service.md types)
+- [x] T005 [P] Define muscle group enum and validation constants in src/models/exercise.ts
+- [x] T006 Create SQLite database initialization with migration runner in src/db/database.ts
+- [x] T007 Create initial schema migration (exercises, sessions, sets tables with indexes) in src/db/migrations/001-initial.ts
+- [x] T008 Create built-in exercise seed data (20-30 exercises across all muscle groups) in src/db/seed.ts
+- [x] T009 Create Expo Router root layout with tab navigation in src/app/_layout.tsx
 
 **Checkpoint**: Foundation ready — database initializes, seed data loads, navigation shell renders
 
@@ -48,22 +48,22 @@
 
 ### Implementation for User Story 1
 
-- [ ] T010 [P] [US1] Implement exercise-service (listExercises, getRecentExercises, createExercise, toggleFavorite) in src/services/exercise-service.ts per contracts/data-service.md
-- [ ] T011 [P] [US1] Implement set-service (logSet, updateSet, deleteSet, getLastSetForExercise) in src/services/set-service.ts per contracts/data-service.md
-- [ ] T012 [US1] Implement SessionContext with useReducer for active session state in src/context/SessionContext.tsx (createSession, add/edit/delete set actions)
-- [ ] T013 [P] [US1] Build WeightStepper component with ±2.5 kg/±5 lb buttons and tappable numeric keypad overlay in src/components/WeightStepper.tsx
-- [ ] T014 [P] [US1] Build ExercisePicker component with recent/favorites tab, muscle group tab, search, and "+ Add Exercise" custom creation in src/components/ExercisePicker.tsx
-- [ ] T015 [US1] Build SetLogForm component (exercise display, WeightStepper, reps input, optional RIR, Log button) with pre-fill from last session in src/components/SetLogForm.tsx
-- [ ] T016 [US1] Build SetList component displaying logged sets grouped by exercise with auto-numbered set labels, edit/delete actions in src/components/SetList.tsx
-- [ ] T017 [US1] Build exercise selection screen using ExercisePicker in src/app/exercise-select.tsx
-- [ ] T018 [US1] Build home screen with active session view, SetLogForm, SetList, and "Start Workout" button in src/app/index.tsx
+- [x] T010 [P] [US1] Implement exercise-service (listExercises, getRecentExercises, createExercise, toggleFavorite) in src/services/exercise-service.ts per contracts/data-service.md
+- [x] T011 [P] [US1] Implement set-service (logSet, updateSet, deleteSet, getLastSetForExercise) in src/services/set-service.ts per contracts/data-service.md
+- [x] T012 [US1] Implement SessionContext with useReducer for active session state in src/context/SessionContext.tsx (createSession, add/edit/delete set actions)
+- [x] T013 [P] [US1] Build WeightStepper component with ±2.5 kg/±5 lb buttons and tappable numeric keypad overlay in src/components/WeightStepper.tsx
+- [x] T014 [P] [US1] Build ExercisePicker component with recent/favorites tab, muscle group tab, search, and "+ Add Exercise" custom creation in src/components/ExercisePicker.tsx
+- [x] T015 [US1] Build SetLogForm component (exercise display, WeightStepper, reps input, optional RIR, Log button) with pre-fill from last session in src/components/SetLogForm.tsx
+- [x] T016 [US1] Build SetList component displaying logged sets grouped by exercise with auto-numbered set labels, edit/delete actions in src/components/SetList.tsx
+- [x] T017 [US1] Build exercise selection screen using ExercisePicker in src/app/exercise-select.tsx
+- [x] T018 [US1] Build home screen with active session view, SetLogForm, SetList, and "Start Workout" button in src/app/index.tsx
 
 ### Tests for User Story 1 (Constitution-mandated: critical data-path logic)
 
-- [ ] T019 [P] [US1] Unit test set-service: logSet persistence, getLastSetForExercise pre-fill, deleteSet renumbering, validation (weight ≥ 0, reps ≥ 1, rir 0-10) in tests/unit/set-service.test.ts
-- [ ] T020 [P] [US1] Unit test exercise-service: listExercises filtering, getRecentExercises, createExercise uniqueness, toggleFavorite in tests/unit/exercise-service.test.ts
-- [ ] T021 [P] [US1] Component test WeightStepper: increment/decrement taps, keypad toggle, pre-fill display in tests/component/WeightStepper.test.tsx
-- [ ] T022 [P] [US1] Component test SetLogForm: ≤3 tap logging flow, pre-fill behavior, RIR optional entry in tests/component/SetLogForm.test.tsx
+- [x] T019 [P] [US1] Unit test set-service: logSet persistence, getLastSetForExercise pre-fill, deleteSet renumbering, validation (weight ≥ 0, reps ≥ 1, rir 0-10) in tests/unit/set-service.test.ts
+- [x] T020 [P] [US1] Unit test exercise-service: listExercises filtering, getRecentExercises, createExercise uniqueness, toggleFavorite in tests/unit/exercise-service.test.ts
+- [x] T021 [P] [US1] Component test WeightStepper: increment/decrement taps, keypad toggle, pre-fill display in tests/component/WeightStepper.test.tsx
+- [x] T022 [P] [US1] Component test SetLogForm: ≤3 tap logging flow, pre-fill behavior, RIR optional entry in tests/component/SetLogForm.test.tsx
 
 **Checkpoint**: User Story 1 fully functional — user can log sets with exercise selection, weight stepper, and pre-fill. All logged sets persist and display correctly.
 
@@ -77,14 +77,14 @@
 
 ### Implementation for User Story 2
 
-- [ ] T023 [US2] Implement session-service (createSession, endSession, getActiveSession, listSessions, getSessionDetail with summary calculation) in src/services/session-service.ts per contracts/data-service.md
-- [ ] T024 [US2] Build SessionSummary component (total sets, total volume, duration, exercise count) in src/components/SessionSummary.tsx
-- [ ] T025 [US2] Add session lifecycle controls to home screen: "Start Workout" / "End Workout" buttons, session timer, active session guard (prompt if session already active) in src/app/index.tsx
-- [ ] T026 [US2] Add active session restoration on app launch — check for active session in SQLite and restore to SessionContext in src/context/SessionContext.tsx
+- [x] T023 [US2] Implement session-service (createSession, endSession, getActiveSession, listSessions, getSessionDetail with summary calculation) in src/services/session-service.ts per contracts/data-service.md
+- [x] T024 [US2] Build SessionSummary component (total sets, total volume, duration, exercise count) in src/components/SessionSummary.tsx
+- [x] T025 [US2] Add session lifecycle controls to home screen: "Start Workout" / "End Workout" buttons, session timer, active session guard (prompt if session already active) in src/app/index.tsx
+- [x] T026 [US2] Add active session restoration on app launch — check for active session in SQLite and restore to SessionContext in src/context/SessionContext.tsx
 
 ### Tests for User Story 2 (Constitution-mandated: session lifecycle)
 
-- [ ] T027 [P] [US2] Unit test session-service: createSession (single active constraint), endSession (summary calculation), getActiveSession, listSessions pagination, session restoration in tests/unit/session-service.test.ts
+- [x] T027 [P] [US2] Unit test session-service: createSession (single active constraint), endSession (summary calculation), getActiveSession, listSessions pagination, session restoration in tests/unit/session-service.test.ts
 
 **Checkpoint**: User Stories 1 AND 2 both work — sessions can be started/ended, sets are grouped, app survives force-close
 
@@ -98,9 +98,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T028 [US3] Build session history list screen with reverse chronological session cards (date, duration, exercise count) in src/app/history/index.tsx
-- [ ] T029 [US3] Build session detail screen showing all sets grouped by exercise with weight, reps, RIR, set numbers; include edit/delete set actions for past sessions in src/app/history/[id].tsx
-- [ ] T030 [US3] Add history tab navigation to app layout in src/app/_layout.tsx
+- [x] T028 [US3] Build session history list screen with reverse chronological session cards (date, duration, exercise count) in src/app/history/index.tsx
+- [x] T029 [US3] Build session detail screen showing all sets grouped by exercise with weight, reps, RIR, set numbers; include edit/delete set actions for past sessions in src/app/history/[id].tsx
+- [x] T030 [US3] Add history tab navigation to app layout in src/app/_layout.tsx
 
 **Checkpoint**: All three user stories independently functional
 
@@ -112,7 +112,7 @@
 
 - [ ] T031 [P] Verify offline mode end-to-end (airplane mode: start session, log sets, end session, view history) per quickstart.md
 - [ ] T032 [P] Verify ≤3 tap set logging flow on physical device per SC-001
-- [ ] T033 [P] Code cleanup, remove unused imports, ensure consistent code style across all files
+- [x] T033 [P] Code cleanup, remove unused imports, ensure consistent code style across all files
 - [ ] T034 Run full quickstart.md validation sequence
 
 ---
