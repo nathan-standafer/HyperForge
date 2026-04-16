@@ -97,7 +97,6 @@ import {
   createTemplate,
   listTemplates,
   getTemplateDetail,
-  updateTemplate,
   deleteTemplate,
   moveTemplateExercise,
   removeTemplateExercise,

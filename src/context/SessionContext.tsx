@@ -7,18 +7,21 @@ import React, {
 } from 'react';
 import type { Session } from '../models/session';
 import type { Set } from '../models/set';
+import type { SessionTarget } from '../models/session-target';
 import * as sessionService from '../services/session-service';
 import * as setService from '../services/set-service';
+import { startSessionFromTemplate, getSessionTargets } from '../services/session-template-service';
 
 interface SessionState {
   activeSession: Session | null;
   sets: Set[];
+  sessionTargets: SessionTarget[];
   loading: boolean;
 }
 
 type SessionAction =
   | { type: 'SET_LOADING'; loading: boolean }
-  | { type: 'SET_SESSION'; session: Session | null; sets: Set[] }
+  | { type: 'SET_SESSION'; session: Session | null; sets: Set[]; targets?: SessionTarget[] }
   | { type: 'ADD_SET'; set: Set }
   | { type: 'UPDATE_SET'; set: Set }
   | { type: 'REMOVE_SET'; setId: string }
@@ -36,6 +39,7 @@ function sessionReducer(
         ...state,
         activeSession: action.session,
         sets: action.sets,
+        sessionTargets: action.targets ?? [],
         loading: false,
       };
     case 'ADD_SET':
@@ -53,7 +57,7 @@ function sessionReducer(
         sets: state.sets.filter((s) => s.id !== action.setId),
       };
     case 'END_SESSION':
-      return { ...state, activeSession: null, sets: [] };
+      return { ...state, activeSession: null, sets: [], sessionTargets: [] };
     default:
       return state;
   }
@@ -62,6 +66,7 @@ function sessionReducer(
 interface SessionContextValue {
   state: SessionState;
   startSession: () => Promise<void>;
+  startFromTemplate: (templateId: string) => Promise<void>;
   endSession: () => Promise<void>;
   logSet: (input: {
     exerciseId: string;
@@ -82,6 +87,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(sessionReducer, {
     activeSession: null,
     sets: [],
+    sessionTargets: [],
     loading: true,
   });
 
@@ -91,8 +97,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       try {
         const session = await sessionService.getActiveSession();
         if (session) {
-          const sets = await setService.getSetsForSession(session.id);
-          dispatch({ type: 'SET_SESSION', session, sets });
+          const [sets, targets] = await Promise.all([
+            setService.getSetsForSession(session.id),
+            getSessionTargets(session.id),
+          ]);
+          dispatch({ type: 'SET_SESSION', session, sets, targets });
         } else {
           dispatch({ type: 'SET_SESSION', session: null, sets: [] });
         }
@@ -105,6 +114,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const startSession = async () => {
     const session = await sessionService.createSession();
     dispatch({ type: 'SET_SESSION', session, sets: [] });
+  };
+
+  const startFromTemplate = async (templateId: string) => {
+    const { session, targets } = await startSessionFromTemplate(templateId);
+    dispatch({ type: 'SET_SESSION', session, sets: [], targets });
   };
 
   const endSession = async () => {
@@ -157,6 +171,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       value={{
         state,
         startSession,
+        startFromTemplate,
         endSession,
         logSet: logSetAction,
         updateSet: updateSetAction,

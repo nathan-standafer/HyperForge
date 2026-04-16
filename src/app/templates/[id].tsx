@@ -17,6 +17,7 @@ import {
   type CreateTemplateInput,
 } from '../../services/template-service';
 import type { TemplateDetail } from '../../models/template';
+import { startSessionFromTemplate } from '../../services/session-template-service';
 
 export default function TemplateDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -106,8 +107,10 @@ export default function TemplateDetailScreen() {
           <Pressable
             style={[styles.startBtn, !canStart && { opacity: 0.4 }]}
             disabled={!canStart}
-            onPress={() => {
-              // Wired in US2
+            onPress={async () => {
+              if (!id) return;
+              await startSessionFromTemplate(id);
+              router.navigate('/');
             }}
           >
             <Text style={styles.startBtnText}>

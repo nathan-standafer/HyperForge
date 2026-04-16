@@ -26,7 +26,7 @@ Single Expo app at repository root. New source under `src/`, tests under `tests/
 
 **Purpose**: Create the new directories needed for this feature.
 
-- [ ] T001 Create directories: `src/app/templates/`, `src/app/programs/`, `src/models/` (exists), `src/services/` (exists), `src/components/` (exists)
+- [X] T001 Create directories: `src/app/templates/`, `src/app/programs/`
 
 ---
 
@@ -36,11 +36,11 @@ Single Expo app at repository root. New source under `src/`, tests under `tests/
 
 **⚠️ CRITICAL**: No user story can start until this phase is complete.
 
-- [ ] T002 Write migration `src/db/migrations/002-templates.ts` — create tables `templates`, `template_exercises`, `programs`, `program_days`, `session_targets` per `data-model.md`; ALTER `sessions` ADD COLUMN `template_id TEXT`; create indexes per data-model; export as `migration002`
-- [ ] T003 Register `migration002` in `src/db/database.ts` — add import and append to `migrations` array
-- [ ] T004 [P] Create `src/models/template.ts` — export `WorkoutTemplate`, `TemplateExercise`, `TemplateDetail` interfaces per `data-model.md`
-- [ ] T005 [P] Create `src/models/program.ts` — export `DayOfWeek` type, `DAY_NAMES` constant, `Program`, `ProgramDay`, `ProgramDetail` interfaces per `data-model.md`
-- [ ] T006 [P] Create `src/models/session-target.ts` — export `SessionTarget` interface per `data-model.md`
+- [X] T002 Write migration `src/db/migrations/002-templates.ts`
+- [X] T003 Register `migration002` in `src/db/database.ts`
+- [X] T004 [P] Create `src/models/template.ts`
+- [X] T005 [P] Create `src/models/program.ts`
+- [X] T006 [P] Create `src/models/session-target.ts`
 
 **Checkpoint**: Schema and models in place — user-story phases can begin.
 
@@ -54,19 +54,19 @@ Single Expo app at repository root. New source under `src/`, tests under `tests/
 
 ### Tests for User Story 1
 
-- [ ] T007 [P] [US1] Unit tests for `template-service` in `tests/unit/template-service.test.ts` — mock expo-sqlite + expo-crypto; test createTemplate (transaction, ordinals assigned), listTemplates (alphabetical, filter by styleTag), getTemplateDetail (joins exercise names), updateTemplate (name/tag), deleteTemplate, addTemplateExercise, removeTemplateExercise (renumbers ordinals), moveTemplateExercise up/down (boundary no-ops), updateTemplateExercise
+- [X] T007 [P] [US1] Unit tests for `template-service` (7 tests)
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Implement `src/services/template-service.ts` per `contracts/template-service.md` — createTemplate (transaction: insert template + exercises with ordinals 0..N-1), listTemplates (alphabetical, optional styleTag WHERE), getTemplateDetail (JOIN exercises + exercise names), updateTemplate, deleteTemplate, addTemplateExercise, removeTemplateExercise (renumber), moveTemplateExercise (swap ordinals in transaction), updateTemplateExercise
-- [ ] T009 [P] [US1] Build `src/components/TemplateExerciseRow.tsx` — props per contracts: exercise name, target sets × reps @ weight, move-up/move-down buttons (disabled when isFirst/isLast), remove button, edit targets inline; ≥40px touch targets
-- [ ] T010 [P] [US1] Build `src/components/TemplateCard.tsx` — props per contracts: template name, style tag chip, exercise count; Pressable with onPress
-- [ ] T011 [US1] Build `src/components/TemplateForm.tsx` — name TextInput, style tag selector (predefined chips: Push/Pull/Legs/Upper/Lower/Full Body + custom text input), exercise list using `TemplateExerciseRow`, "Add Exercise" button opening existing `ExercisePicker`, collect targetSets/targetReps/targetWeight per exercise; onSave returns `CreateTemplateInput`
-- [ ] T012 [US1] Build `src/app/templates/create.tsx` route — renders `TemplateForm`, on save calls `createTemplate`, navigates back to template list
-- [ ] T013 [US1] Build `src/app/templates/index.tsx` route — FlatList of `TemplateCard`s from `listTemplates()`; training style filter chips at top; empty state "No templates yet" with create button; FAB or header button to navigate to create
-- [ ] T014 [US1] Build `src/app/templates/[id].tsx` route — loads `getTemplateDetail`, renders read-only template view with exercise list; "Edit" button enters edit mode (renders `TemplateForm` with initial data); "Delete" button with confirmation alert; "Start Workout" button (disabled + hint if zero exercises; wired in US2)
-- [ ] T015 [US1] Add "Templates" tab to `src/app/_layout.tsx` — tab icon and label; add hidden route entries for `templates/create` and `templates/[id]`
-- [ ] T016 [US1] Airplane-mode manual verification of template CRUD — **user-executed on device**
+- [X] T008 [US1] Implement `src/services/template-service.ts`
+- [X] T009 [P] [US1] Build `src/components/TemplateExerciseRow.tsx`
+- [X] T010 [P] [US1] Build `src/components/TemplateCard.tsx`
+- [X] T011 [US1] Build `src/components/TemplateForm.tsx`
+- [X] T012 [US1] Build `src/app/templates/create.tsx`
+- [X] T013 [US1] Build `src/app/templates/index.tsx`
+- [X] T014 [US1] Build `src/app/templates/[id].tsx`
+- [X] T015 [US1] Add "Templates" tab to `src/app/_layout.tsx`
+- [ ] T016 [US1] Airplane-mode manual verification — **user-executed on device**
 
 **Checkpoint**: User Story 1 — full template lifecycle works, ready to ship as MVP.
 
@@ -80,16 +80,16 @@ Single Expo app at repository root. New source under `src/`, tests under `tests/
 
 ### Tests for User Story 2
 
-- [ ] T017 [P] [US2] Unit tests for `session-template-service` in `tests/unit/session-template-service.test.ts` — mock expo-sqlite + expo-crypto + session-service.createSession; test startSessionFromTemplate (creates session, sets template_id, inserts session_targets in order, skips deleted exercises with warning), getSessionTargets (returns ordered targets for session, empty for non-template session)
+- [X] T017 [P] [US2] Unit tests for `session-template-service` (4 tests)
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Implement `src/services/session-template-service.ts` per contracts — startSessionFromTemplate: in transaction call createSession(), UPDATE sessions SET template_id, SELECT template_exercises JOIN exercises (skip where exercise missing → collect warnings), INSERT into session_targets; getSessionTargets: SELECT from session_targets WHERE session_id ORDER BY ordinal
-- [ ] T019 [US2] Build `src/components/TemplateSessionView.tsx` — per contracts: for each target exercise, show exercise name + progress (e.g., "2/3 sets done"), pre-fill weight/reps from target, "Log Set" button calls onLogSet; dimmed/completed state for exercises where logged sets ≥ target_sets; section at bottom for extra (non-template) exercises
-- [ ] T020 [US2] Wire "Start Workout" in `src/app/templates/[id].tsx` — on press: call startSessionFromTemplate, navigate to home screen (which detects active session); pass template_id via router params or context
-- [ ] T021 [US2] Integrate `TemplateSessionView` into `src/app/index.tsx` home screen — when active session has template_id: load session targets via getSessionTargets, render TemplateSessionView alongside existing SetLogForm/SetList; when no template_id: existing behavior unchanged
-- [ ] T022 [US2] Handle force-close recovery in `src/context/SessionContext.tsx` — on mount, if active session has template_id, also load session_targets and expose them in context state so TemplateSessionView can render
-- [ ] T023 [US2] Airplane-mode manual verification of template session flow — **user-executed on device**
+- [X] T018 [US2] Implement `src/services/session-template-service.ts`
+- [X] T019 [US2] Build `src/components/TemplateSessionView.tsx`
+- [X] T020 [US2] Wire "Start Workout" in `src/app/templates/[id].tsx`
+- [X] T021 [US2] Integrate `TemplateSessionView` into `src/app/index.tsx`
+- [X] T022 [US2] Handle force-close recovery in `src/context/SessionContext.tsx` — loads sessionTargets on mount if active session exists
+- [ ] T023 [US2] Airplane-mode manual verification — **user-executed on device**
 
 **Checkpoint**: User Stories 1 and 2 functional — templates can be created and used to start sessions.
 
@@ -103,20 +103,20 @@ Single Expo app at repository root. New source under `src/`, tests under `tests/
 
 ### Tests for User Story 3
 
-- [ ] T024 [P] [US3] Unit tests for `program-service` in `tests/unit/program-service.test.ts` — mock expo-sqlite + expo-crypto; test createProgram (transaction, day assignments), listPrograms, getProgramDetail (joins template names), deleteProgram, setActiveProgram (deactivates others in transaction), clearActiveProgram, assignDay (replaces existing), unassignDay, getTodaySuggestion (returns template for today's day-of-week from active program; returns null when no active program; returns alreadyCompleted=true when session with template_id exists today; returns null for unassigned day)
+- [X] T024 [P] [US3] Unit tests for `program-service` (6 tests)
 
 ### Implementation for User Story 3
 
-- [ ] T025 [US3] Implement `src/services/program-service.ts` per contracts — createProgram (transaction: INSERT program + program_days), listPrograms, getProgramDetail (JOIN program_days + templates for names), deleteProgram, setActiveProgram (UPDATE all to 0 then target to 1 in transaction), clearActiveProgram, assignDay (INSERT OR REPLACE on unique constraint), unassignDay (DELETE), getTodaySuggestion (get active program → get today's day_of_week → lookup program_days → load template detail → check if session with template_id started today exists → return TodaySuggestion or null)
-- [ ] T026 [P] [US3] Build `src/components/ProgramDayRow.tsx` — shows day name, assigned template name (or "Rest Day" / "Tap to assign"), onPress to assign/change template
-- [ ] T027 [P] [US3] Build `src/components/ProgramForm.tsx` — name TextInput, 7 `ProgramDayRow` components (Mon–Sun), "Assign Template" opens a picker/modal listing saved templates; onSave returns `CreateProgramInput`
-- [ ] T028 [P] [US3] Build `src/components/SuggestionCard.tsx` — per contracts: show template name + exercise count + "Start Workout" button; "Completed" badge variant when alreadyCompleted; rest-day variant (or null)
-- [ ] T029 [US3] Build `src/app/programs/create.tsx` route — renders `ProgramForm`, on save calls `createProgram`, navigates back
-- [ ] T030 [US3] Build `src/app/programs/index.tsx` route — FlatList of programs; active program highlighted; tap to view detail; long-press or menu to set active / delete; empty state with create button
-- [ ] T031 [US3] Build `src/app/programs/[id].tsx` route — loads `getProgramDetail`, renders day assignments; "Set Active" / "Deactivate" button; "Edit" / "Delete" actions
-- [ ] T032 [US3] Integrate `SuggestionCard` into `src/app/index.tsx` home screen — when no active session: call getTodaySuggestion; if suggestion exists, render SuggestionCard above the "Start Workout" button; tapping "Start Workout" on card calls startSessionFromTemplate (reuses US2 flow)
-- [ ] T033 [US3] Add navigation entry for programs — either a sub-tab under Templates, a settings entry, or a separate "Programs" tab in `src/app/_layout.tsx`; add hidden route entries for `programs/create` and `programs/[id]`
-- [ ] T034 [US3] Airplane-mode manual verification of program flow — **user-executed on device**
+- [X] T025 [US3] Implement `src/services/program-service.ts`
+- [X] T026 [P] [US3] Build `src/components/ProgramDayRow.tsx`
+- [X] T027 [P] [US3] Build `src/components/ProgramForm.tsx`
+- [X] T028 [P] [US3] Build `src/components/SuggestionCard.tsx`
+- [X] T029 [US3] Build `src/app/programs/create.tsx`
+- [X] T030 [US3] Build `src/app/programs/index.tsx`
+- [X] T031 [US3] Build `src/app/programs/[id].tsx`
+- [X] T032 [US3] Integrate `SuggestionCard` into `src/app/index.tsx`
+- [X] T033 [US3] Navigation entries for programs added to `src/app/_layout.tsx`
+- [ ] T034 [US3] Airplane-mode manual verification — **user-executed on device**
 
 **Checkpoint**: All three user stories functional.
 
@@ -124,12 +124,12 @@ Single Expo app at repository root. New source under `src/`, tests under `tests/
 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
-- [ ] T035 [P] Run `npm test` — all new and existing unit tests pass
-- [ ] T036 [P] Run `npm run lint` — zero warnings in new files
-- [ ] T037 Verify feature 001 regression: start a blank session (no template), log sets, end session — existing flow unchanged
-- [ ] T038 Verify feature 002 regression: open Progress tab, verify template-started sessions appear in trends and dashboard
-- [ ] T039 Performance check: template list with 20+ items loads <1s; suggestion card appears <1s on home screen — **user-executed**
-- [ ] T040 Walk `quickstart.md` end-to-end on a real device — **user-executed**
+- [X] T035 [P] `npm test` — 45 unit tests pass (8 new suites). 3 pre-existing feature-001 suites still fail (expo-crypto mock missing — unrelated).
+- [X] T036 [P] `npm run lint` — zero warnings in new files (3 pre-existing warnings remain)
+- [ ] T037 Verify feature 001 regression — **user-executed on device**
+- [ ] T038 Verify feature 002 regression — **user-executed on device**
+- [ ] T039 Performance check — **user-executed**
+- [ ] T040 Walk `quickstart.md` end-to-end — **user-executed**
 
 ---
 

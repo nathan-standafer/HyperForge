@@ -15,10 +15,15 @@ import SetLogForm from '../components/SetLogForm';
 import SetList from '../components/SetList';
 import ExercisePicker from '../components/ExercisePicker';
 import SessionSummary from '../components/SessionSummary';
+import { TemplateSessionView } from '../components/TemplateSessionView';
+import { SuggestionCard } from '../components/SuggestionCard';
+import { getTodaySuggestion, type TodaySuggestion } from '../services/program-service';
 
 function HomeContent() {
-  const { state, startSession, endSession, logSet, updateSet, deleteSet } =
+  const { state, startSession, startFromTemplate, endSession, logSet, updateSet, deleteSet } =
     useSession();
+  const hasTemplateTargets = state.sessionTargets.length > 0;
+  const [suggestion, setSuggestion] = useState<TodaySuggestion | null>(null);
   const [selectedExercise, setSelectedExercise] =
     useState<Exercise | null>(null);
   const [showExercisePicker, setShowExercisePicker] = useState(false);
@@ -27,15 +32,19 @@ function HomeContent() {
   );
   const [showSummary, setShowSummary] = useState(false);
 
-  // Load exercise details for display
+  // Load exercise details and today's program suggestion
   useEffect(() => {
     (async () => {
-      const exercises = await exerciseService.listExercises();
+      const [exercises, sug] = await Promise.all([
+        exerciseService.listExercises(),
+        getTodaySuggestion(),
+      ]);
       const map = new Map<string, Exercise>();
       for (const e of exercises) {
         map.set(e.id, e);
       }
       setExerciseMap(map);
+      setSuggestion(sug);
     })();
   }, []);
 
@@ -51,6 +60,15 @@ function HomeContent() {
   if (!state.activeSession) {
     return (
       <View style={styles.center}>
+        {suggestion && (
+          <SuggestionCard
+            suggestion={suggestion}
+            onStart={async () => {
+              await startFromTemplate(suggestion.template.id);
+              setSuggestion({ ...suggestion, alreadyCompleted: true });
+            }}
+          />
+        )}
         <Text style={styles.heroText}>Ready to lift?</Text>
         <TouchableOpacity style={styles.startButton} onPress={startSession}>
           <Text style={styles.startButtonText}>Start Workout</Text>
@@ -116,6 +134,21 @@ function HomeContent() {
             <Text style={styles.endButtonText}>End Workout</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Template exercise targets (if session started from template) */}
+        {hasTemplateTargets && (
+          <TemplateSessionView
+            targets={state.sessionTargets}
+            loggedSets={state.sets}
+            exercises={exerciseMap}
+            onSelectExercise={(exerciseId, _weight, _reps) => {
+              const exercise = exerciseMap.get(exerciseId);
+              if (exercise) {
+                setSelectedExercise(exercise);
+              }
+            }}
+          />
+        )}
 
         {/* Set Log Form or Exercise Selection */}
         {selectedExercise ? (
