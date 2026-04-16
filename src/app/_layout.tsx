@@ -33,6 +33,15 @@ export default function RootLayout() {
           }}
         />
         <Tabs.Screen
+          name="progress/index"
+          options={{
+            title: 'Progress',
+            tabBarIcon: ({ color }) => (
+              <Text style={{ color, fontSize: 20 }}>📈</Text>
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="exercise-select"
           options={{
             href: null,
@@ -40,6 +49,18 @@ export default function RootLayout() {
         />
         <Tabs.Screen
           name="history/[id]"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="progress/exercise/[id]"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="progress/prs/[exerciseId]"
           options={{
             href: null,
           }}
