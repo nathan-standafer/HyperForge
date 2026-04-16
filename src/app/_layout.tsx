@@ -42,6 +42,15 @@ export default function RootLayout() {
           }}
         />
         <Tabs.Screen
+          name="templates/index"
+          options={{
+            title: 'Templates',
+            tabBarIcon: ({ color }) => (
+              <Text style={{ color, fontSize: 20 }}>📝</Text>
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="exercise-select"
           options={{
             href: null,
@@ -64,6 +73,26 @@ export default function RootLayout() {
           options={{
             href: null,
           }}
+        />
+        <Tabs.Screen
+          name="templates/create"
+          options={{ href: null }}
+        />
+        <Tabs.Screen
+          name="templates/[id]"
+          options={{ href: null }}
+        />
+        <Tabs.Screen
+          name="programs/index"
+          options={{ href: null }}
+        />
+        <Tabs.Screen
+          name="programs/create"
+          options={{ href: null }}
+        />
+        <Tabs.Screen
+          name="programs/[id]"
+          options={{ href: null }}
         />
       </Tabs>
     </>

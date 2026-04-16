@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { migration001 } from './migrations/001-initial';
+import { migration002 } from './migrations/002-templates';
 import { seedExercises } from './seed';
 
 const DB_NAME = 'hyperforge.db';
@@ -7,7 +8,7 @@ const DB_NAME = 'hyperforge.db';
 let db: SQLite.SQLiteDatabase | null = null;
 let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;
 
-const migrations = [migration001];
+const migrations = [migration001, migration002];
 
 export async function getDatabase(): Promise<SQLite.SQLiteDatabase> {
   if (db) return db;
