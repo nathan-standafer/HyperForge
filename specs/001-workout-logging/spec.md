@@ -100,7 +100,8 @@ chronologically with correct set details.
 - What happens when the user logs a set with zero weight (bodyweight
   exercise)? The system accepts it and labels the set as bodyweight.
 - What happens when the user accidentally logs a set with wrong data?
-  The user can edit or delete any set within the current session.
+  The user can edit or delete any set in any session, including past
+  completed sessions.
 - What happens when the app crashes mid-set-entry? Unsaved form data
   is lost, but all previously logged sets in the session are preserved.
 - What happens when the user starts a new session while one is still
@@ -117,9 +118,11 @@ chronologically with correct set details.
 - **FR-003**: System MUST persist each logged set to local storage
   before displaying confirmation to the user.
 - **FR-004**: System MUST pre-fill weight and reps from the user's
-  most recent session for the same exercise.
+  most recent session for the same exercise. Weight input MUST
+  provide increment/decrement buttons (±2.5 kg / ±5 lb) and be
+  tappable to open a numeric keypad for direct entry.
 - **FR-005**: System MUST allow users to edit or delete any set
-  within the current active session.
+  within any session (active or completed).
 - **FR-006**: System MUST restore an active session and its sets if
   the app is closed and reopened.
 - **FR-007**: System MUST record a timestamp for each logged set.
@@ -131,15 +134,21 @@ chronologically with correct set details.
   field per set to capture perceived effort.
 - **FR-011**: System MUST function fully offline, storing all data
   locally, and sync when connectivity returns.
+- **FR-012**: System MUST display a recent/favorites exercise list as
+  the default selection view, with the full exercise list organized
+  by muscle group and searchable.
+- **FR-013**: System MUST allow users to create custom exercises by
+  providing a name and selecting a muscle group.
 
 ### Key Entities
 
 - **Exercise**: A named movement pattern (e.g., "Barbell Bench Press")
-  with associated muscle group(s). For this feature, a minimal
-  built-in list is sufficient; a full exercise library is out of scope.
+  with associated muscle group(s). A minimal built-in list (20-30
+  exercises) is provided; users can also create custom exercises by
+  entering a name and selecting a muscle group.
 - **Set**: A single performance record — belongs to one exercise
-  within one session. Attributes: weight, reps, RIR (optional),
-  timestamp.
+  within one session. Attributes: set number (auto-incremented per
+  exercise within a session), weight, reps, RIR (optional), timestamp.
 - **Session**: A time-bounded workout event grouping one or more sets.
   Attributes: start time, end time, status (active/complete).
 
@@ -157,6 +166,16 @@ chronologically with correct set details.
   in functionality.
 - **SC-005**: Users can review any past session and see complete set
   details within 2 seconds of navigation.
+
+## Clarifications
+
+### Session 2026-04-15
+
+- Q: How does exercise selection work during set logging? → A: Recent/favorites list shown first for quick access; full exercise list organized by muscle group with search available.
+- Q: Can users edit completed (past) sessions? → A: Yes, past sessions are fully editable (add, edit, delete sets) at any time.
+- Q: What if the user's exercise isn't in the built-in list? → A: Users can add custom exercises by providing a name and muscle group.
+- Q: How do users input weight values? → A: Pre-filled from last session with increment/decrement buttons (±2.5 kg / ±5 lb); tappable to open a numeric keypad for direct entry.
+- Q: How are multiple sets of the same exercise ordered? → A: Auto-numbered sequentially (Set 1, 2, 3...) in the order logged.
 
 ## Assumptions
 
