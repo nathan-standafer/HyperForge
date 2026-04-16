@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'expo-crypto';
 import { getDatabase } from '../db/database';
 import type {
   Session,
@@ -66,7 +66,7 @@ export async function createSession(): Promise<Session> {
     );
   }
 
-  const id = uuid();
+  const id = randomUUID();
   const now = new Date().toISOString();
 
   await db.runAsync(

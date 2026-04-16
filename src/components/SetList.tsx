@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList,
   StyleSheet,
 } from 'react-native';
 import type { Set } from '../models/set';
@@ -64,11 +63,9 @@ export default function SetList({
   }
 
   return (
-    <FlatList
-      data={grouped}
-      keyExtractor={(item) => item.exerciseId}
-      renderItem={({ item: group }) => (
-        <View style={styles.group}>
+    <View>
+      {grouped.map((group) => (
+        <View key={group.exerciseId} style={styles.group}>
           <Text style={styles.groupTitle}>{group.exerciseName}</Text>
           {group.sets.map((set) => (
             <View key={set.id} style={styles.setRow}>
@@ -99,8 +96,8 @@ export default function SetList({
             </View>
           ))}
         </View>
-      )}
-    />
+      ))}
+    </View>
   );
 }
 
