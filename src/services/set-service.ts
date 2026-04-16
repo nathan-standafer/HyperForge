@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'expo-crypto';
 import { getDatabase } from '../db/database';
 import type { Set, LogSetInput, UpdateSetInput } from '../models/set';
 
@@ -38,7 +38,7 @@ export async function logSet(input: LogSetInput): Promise<Set> {
   }
 
   const db = await getDatabase();
-  const id = uuid();
+  const id = randomUUID();
   const now = new Date().toISOString();
 
   // Auto-assign set number

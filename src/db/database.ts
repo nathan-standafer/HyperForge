@@ -5,14 +5,22 @@ import { seedExercises } from './seed';
 const DB_NAME = 'hyperforge.db';
 
 let db: SQLite.SQLiteDatabase | null = null;
+let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;
 
 const migrations = [migration001];
 
 export async function getDatabase(): Promise<SQLite.SQLiteDatabase> {
   if (db) return db;
-  db = await SQLite.openDatabaseAsync(DB_NAME);
-  await runMigrations(db);
-  return db;
+  if (dbPromise) return dbPromise;
+  dbPromise = initDatabase();
+  return dbPromise;
+}
+
+async function initDatabase(): Promise<SQLite.SQLiteDatabase> {
+  const database = await SQLite.openDatabaseAsync(DB_NAME);
+  await runMigrations(database);
+  db = database;
+  return database;
 }
 
 async function runMigrations(database: SQLite.SQLiteDatabase): Promise<void> {

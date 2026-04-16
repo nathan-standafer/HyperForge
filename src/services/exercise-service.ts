@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'expo-crypto';
 import { getDatabase } from '../db/database';
 import type { Exercise, MuscleGroup, MUSCLE_GROUPS } from '../models/exercise';
 
@@ -74,7 +74,7 @@ export async function createExercise(input: {
   muscleGroup: MuscleGroup;
 }): Promise<Exercise> {
   const db = await getDatabase();
-  const id = uuid();
+  const id = randomUUID();
   const now = new Date().toISOString();
 
   await db.runAsync(

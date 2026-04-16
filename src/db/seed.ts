@@ -1,5 +1,5 @@
 import type * as SQLite from 'expo-sqlite';
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'expo-crypto';
 import type { MuscleGroup } from '../models/exercise';
 
 interface SeedExercise {
@@ -53,7 +53,7 @@ export async function seedExercises(
     await db.runAsync(
       `INSERT OR IGNORE INTO exercises (id, name, muscle_group, is_built_in, is_favorite)
        VALUES (?, ?, ?, 1, 0)`,
-      uuid(),
+      randomUUID(),
       exercise.name,
       exercise.muscleGroup,
     );
