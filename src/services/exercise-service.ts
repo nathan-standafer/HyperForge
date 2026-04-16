@@ -96,6 +96,17 @@ export async function createExercise(input: {
   };
 }
 
+export async function getExerciseById(
+  exerciseId: string,
+): Promise<Exercise | null> {
+  const db = await getDatabase();
+  const row = await db.getFirstAsync<ExerciseRow>(
+    'SELECT * FROM exercises WHERE id = ?',
+    exerciseId,
+  );
+  return row ? rowToExercise(row) : null;
+}
+
 export async function toggleFavorite(
   exerciseId: string,
 ): Promise<Exercise> {

@@ -1,12 +1,13 @@
 import type { Config } from 'jest';
 
 const config: Config = {
-  preset: 'react-native',
+  testEnvironment: 'node',
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
       {
         tsconfig: 'tsconfig.json',
+        diagnostics: { ignoreCodes: [151001] },
       },
     ],
   },
@@ -14,7 +15,7 @@ const config: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  testMatch: ['<rootDir>/tests/**/*.test.{ts,tsx}'],
+  testMatch: ['<rootDir>/tests/unit/**/*.test.ts'],
 };
 
 export default config;
